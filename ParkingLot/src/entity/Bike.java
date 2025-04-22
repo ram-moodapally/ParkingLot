@@ -1,6 +1,6 @@
 package entity;
 
-public class Truck extends Vehicle{
+public class Bike extends Vehicle{
     @Override
     public void assignTicket(ParkingTicket ticket) {
 
