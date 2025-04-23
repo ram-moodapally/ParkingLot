@@ -13,6 +13,8 @@ public class ParkingLot {
 
     private HashMap<String, Entrance> entrance;
     private HashMap<String, Exit> exit;
+    private PricingStrategy pricingStrategy;
+    private PaymentSerice paymentSerice;
 
     // create a hashmap that identifies all currently generated tickets using their ticket number
 
@@ -47,5 +49,7 @@ public class ParkingLot {
     public boolean isFull(ParkingSpot type){
         return false;
     }
+
+
 
 }
