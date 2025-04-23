@@ -1,5 +1,6 @@
 package services;
 
+import constants.AccountStatus;
 import entity.*;
 
 import java.util.HashMap;
@@ -14,7 +15,8 @@ public class ParkingLot {
     private HashMap<String, Entrance> entrance;
     private HashMap<String, Exit> exit;
     private PricingStrategy pricingStrategy;
-    private PaymentSerice paymentSerice;
+    private PaymentService paymentService;
+    private static Vehicle vehicle;
 
     // create a hashmap that identifies all currently generated tickets using their ticket number
 
@@ -42,10 +44,16 @@ public class ParkingLot {
 
     // this function allows parking tickets to be available at multiple entrances
 
-    public ParkingTicket getParkingTicket(Vehicle vehicle){
+    public ParkingTicket getParkingTicket(Vehicle vehicle) {
         return null;
     }
-
+    public AccountStatus makePayment(){
+        double amountPaid = paymentService.calculatePrice(getParkingTicket(vehicle),pricingStrategy );
+        if(amountPaid == 0.0){
+            return AccountStatus.FAILED;
+        }
+        return AccountStatus.COMPLETED;
+    }
     public boolean isFull(ParkingSpot type){
         return false;
     }

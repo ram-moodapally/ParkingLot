@@ -7,16 +7,17 @@ import entity.Payment;
 
 import java.util.Objects;
 
-public class PaymentSerice {
-    private ParkingTicket parkingTicket;
-    private PricingStrategy strategy;
-    private Payment payment;
+public class PaymentService {
+    private static ParkingTicket parkingTicket;
+    private static PricingStrategy strategy;
+    private static Payment payment;
+    private static PaymentService instance = null;
 
     PricingStrategy discountRate = DiscountRate.getInstance();
     // similarly HourlyRating (skpped)
 
     // constructor
-    public PaymentSerice(ParkingTicket parkingTicket, PricingStrategy strategy, Payment payment) {
+    private PaymentService(ParkingTicket parkingTicket, PricingStrategy strategy, Payment payment) {
         this.parkingTicket = parkingTicket;
         this.strategy = strategy;
         this.payment = payment;
@@ -26,11 +27,21 @@ public class PaymentSerice {
         return pricingStrategy.calculate(ticket);
     }
 
+    // Lazy initialization
+    public static PaymentService getInstance(){
+        if(instance == null){
+            instance = new PaymentService(parkingTicket,strategy,payment);
+        }
+        return instance;
+    }
+
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PaymentSerice that = (PaymentSerice) o;
+        PaymentService that = (PaymentService) o;
         return Objects.equals(parkingTicket, that.parkingTicket) && Objects.equals(strategy, that.strategy) && Objects.equals(payment, that.payment);
     }
 
